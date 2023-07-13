@@ -1,0 +1,23 @@
+version: "3.3"
+
+services:
+
+  csrt_algo:
+    container_name: csrt_algo
+    #build:
+    #  context: csrt
+    #  dockerfile: opencv_contrib.Dockerfile
+    image: deaffella/python3.8-opencv-contrib:4.8.0
+    restart: "always"
+    privileged: true
+    tty: true
+    stdin_open: true
+    network_mode: host
+    volumes:
+      - ./csrt/:/csrt
+      - /dev:/dev                               # [обязательно] - для проброса камер
+      - /tmp/.X11-unix:/tmp/.X11-unix           # дисплей
+    environment:
+      - DISPLAY=$DISPLAY
+    working_dir: '/csrt'
+    entrypoint: 'bash'
